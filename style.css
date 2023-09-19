@@ -1,0 +1,52 @@
+body {
+    font-family: Poppins;
+    font-size: 1.3rem;
+    padding: 10%;
+    background-color: rgb(238, 238, 238);
+}
+
+section {
+    background-color: #fff;
+    /* box-shadow: 0 0 50px -20px black;     */
+    padding: 20px;
+    border-radius: 2rem;
+}
+
+.circle {
+    border-radius: 50%;
+    box-shadow: 10px 10px 50px -30px black;
+    background-color: rgb(244, 244, 244);
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.circle p {
+
+}
+
+.start-reset-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 40px 0;
+}
+
+.start, 
+.reset {
+    padding: 10px 40px;
+    box-shadow: 5px 5px 20px -10px black;
+    border-radius: .5rem;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.start {
+    color: rgb(0, 0, 160);
+}
+
+.reset {
+    color: rgb(234, 66, 0);
+}

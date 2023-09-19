@@ -1,12 +1,14 @@
 let start = document.querySelector(".start");
 let reset = document.querySelector(".reset");
+let hours = document.querySelector(".hours");
 let minutes = document.querySelector(".minutes");
 let seconds = document.querySelector(".seconds");
 let milliseconds = document.querySelector(".milliseconds");
 let zero = "0";
 let ms = 1;
 let sec = 1;
-let mins = 1;
+let min = 1;
+let hr = 1;
 
 start.addEventListener("click", () => {
     // let id1;
@@ -46,18 +48,36 @@ start.addEventListener("click", () => {
 
         setInterval(() => {
             zero = "";
-            if (mins < 10){
+            if (min < 10){
                 zero = "0";
             }
-            minutes.textContent = zero + sec;
-            if (mins===9){
+            minutes.textContent = zero + min;
+            if (min===9){
                 zero = "";
             }
-            if (mins===59){
-                mins = -1;
+            if (min===59){
+                min = -1;
             }
-            mins++;
+            min++;
+            if (min===0) {
+            hours.classList.remove("display-none");
+            hours.classList.add("animation");
+            zero = "";
+            if (hr < 10){
+                zero = "0";
+            }
+            hours.textContent = zero + hr + ":";
+            if (hr===9){
+                zero = "";
+            }
+            if (hr===24){
+                hr = -1;
+            }
+            hr++;
+        }
         }, 60000);
+
+        
 
         // setTimeout(() => {
         //     id2 = setInterval(() => {

@@ -477,6 +477,10 @@ section {
     opacity: 0.1;
 }
 
+.start-reset-lap-popup{
+    pointer-events: none;
+}
+
 @keyframes slider {
     from{
         transform: translateX(0);

@@ -98,6 +98,9 @@ const popupFunc = () => {
     start.classList.toggle("opacity-popup");
     reset.classList.toggle("opacity-popup");
     lap.classList.toggle("opacity-popup");
+    start.classList.toggle("start-reset-lap-popup");
+    reset.classList.toggle("start-reset-lap-popup");
+    lap.classList.toggle("start-reset-lap-popup");
     lapPlusContainer.classList.toggle("opacity-popup");
     lapContainer.classList.toggle("opacity-popup");
     
@@ -511,10 +514,14 @@ enableButton.addEventListener("click", () => {
     if (enableButton.textContent === "Enable") {
         enableButton.classList.add("blue");
         lapDisabled = true;
+        
         while (lapContainer.firstChild){
             lapContainer.removeChild(lapContainer.firstChild);
         }
+
         lap.classList.add("display-none");
+        latestLap.classList.add("display-none");
+        latestLap.classList.remove("animation");
     }
     else {
         enableButton.classList.remove("blue");

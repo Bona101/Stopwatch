@@ -9,17 +9,30 @@
   <body>
     <section>
       <div class="clock-div">
-        <p> </p>
+        <p></p>
         <div class="settings-icon">
-          <img class="settings-img" height="20" width="20" src="./images/settings.webp" alt="settings" />
+          <img
+            class="settings-img"
+            height="20"
+            width="20"
+            src="./images/settings.webp"
+            alt="settings"
+          />
         </div>
       </div>
 
       <div class="circle">
-        <p>
+        <p class="main-time">
           <span class="hours display-none">00</span
           ><span class="minutes">00</span>:<span class="seconds">00</span>.<span
             class="milliseconds"
+            >00</span
+          >
+        </p>
+        <p class="latest-lap display-none">
+          <span class="latest-lap-hr hours display-none">00</span
+          ><span class="latest-lap-min minutes">00</span>:<span class="latest-lap-sec seconds">00</span>.<span
+            class="latest-lap-ms"
             >00</span
           >
         </p>
@@ -35,13 +48,13 @@
       </div>
 
       <div class="lap-container"></div>
-    </section>
     <div class="settings display-none">
       <div class="popup">Lap</div>
       <div class="enable-back display-none">
-        <div class="enable-button display-none"></div>
+        <div class="able enable-button display-none">Disable</div>
       </div>
     </div>
+    </section>
 
     <script src="index.js" charset="utf-8"></script>
   </body>

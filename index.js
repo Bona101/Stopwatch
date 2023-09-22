@@ -16,7 +16,7 @@ const latestLapMs = document.querySelector(".latest-lap-ms");
 const hours = document.querySelector(".hours");
 const minutes = document.querySelector(".minutes");
 const seconds = document.querySelector(".seconds");
-const milliseconds = document.querySelector(".milliseconds");
+const microseconds = document.querySelector(".microseconds");
 
 const settingsIcon = document.querySelector(".settings-icon");
 const settingsImg = document.querySelector(".settings-img");
@@ -44,9 +44,13 @@ let slides2;
 let setIntervalMs = 10;
 let timeRemainder = 0;
 
+let pausedLap = 0;
 let lapNum = 1;
 let previousOverallTime = 0;
 let zero = "0";
+
+let mSec = 0;
+let mSec2 = 0;
 let ms = 1;
 let storedMs = ms;
 let sec = 1;
@@ -68,6 +72,7 @@ let index = 0;
 let slideIndex = 0;
 let ableIndex = 0;
 
+// let alreadyRan = false;
 let lapDisabled = false;
 
 let ableArray = ["Enable", "Disable"];
@@ -87,6 +92,7 @@ let SettingImages = ["./images/cancel.png","./images/settings.webp"];
 const popupFunc = () => {
     section.classList.toggle("section-popup");
     body.classList.toggle("body-popup");
+    // settings.classList.add("settings-animation");
     settings.classList.toggle("settings-popup");
     settings.classList.toggle("display-none");
     popup.classList.toggle("popup-popup");
@@ -118,219 +124,13 @@ const popupFunc = () => {
     index = (index + 1) % 2;
 }
 
-const hrCalculator = (time) => {
-    let flooredTime = Math.floor(time / 360000);
-    lapHr = flooredTime;
-    minCalculator(time - lapHr * 360000);
-}
-
-const minCalculator = (time) => {
-    let flooredTime = Math.floor(time / 6000);
-    lapMin = flooredTime;
-    secCalculator(time - lapMin * 6000);
-}
-
-const secCalculator = (time) => {
-    let flooredTime = Math.floor(time / 100);
-    lapSec = flooredTime;
-    msCalculator(time - lapSec * 100);
-}
-
-const msCalculator = (time) => {
-    lapMs = time;
-}
-
-const totalTimeCalculator = () => {  // time is calculated in microseconds not milliseconds
-    let msNum = +milliseconds.textContent;
-    let secNum = +seconds.textContent;
-    let minNum = +minutes.textContent;
-    let hrNum = +hours.textContent;
-
-    let totalTime = msNum + (secNum * 100) + (minNum * 6000) + (hrNum * 360000);
-    return totalTime;
-}
-
-const latestLapFunc = () => {
-
-    latestLap.classList.add("animation");
-    latestLap.classList.remove("display-none");
-    
-    let lapHrS;
-    let lapMinS;
-    let lapSecS;
-    let lapMsS;
-
-    setInterval(() => {
-        hrCalculator(Math.abs(totalTimeCalculator() - currentOverallTime));
-
-        if (lapHr === 0){
-            lapHrS = "";
-        }
-
-        else if (lapHr < 10) {
-            lapHrS = "0" + lapHr + ":";
-        }
-
-        else {
-            lapHrS = lapHr + ":";
-        }
-
-        if (lapMin === 59 && lapSec === 59){
-            latestLapHr.textContent = "00:";
-            latestLapHr.classList.add("animation");
-            latestLapHr.classList.remove("display-none");
-        }
-
-        
-        if (lapMin < 10) {
-            lapMinS = "0" + lapMin;
-        }
-
-        else {
-            lapMinS = lapMin;
-        }
+const timeDisplay = () => {
+    // () => {
+            // for more accuracy I set it to 1ms and actually run the code every 10ms
+            // mSec = (mSec + 1) % 10;
+            // if (mSec === 0){
 
 
-
-        if (lapSec < 10) {
-            lapSecS = "0" + lapSec;
-        }
-
-        else {
-            lapSecS = lapSec;
-        }
-
-
-
-        if (lapMs < 10) {
-            lapMsS = "0" + lapMs;
-        }
-
-        else {
-            lapMsS = lapMs;
-        }
-
-
-
-        latestLapHr.textContent = lapHrS;
-        latestLapMin.textContent = lapMinS;
-        latestLapSec.textContent = lapSecS;
-        latestLapMs.textContent = lapMsS;
-    }, 10)
-}
-
-const createLap = () => {
-    let newLap = document.createElement("div");
-    let newLapNum = document.createElement("div");
-    let newLapTime = document.createElement("div");
-    let newLapOtherTime = document.createElement("div");
-    let newLapMs = document.createElement("div");
-    let newOverallTime = document.createElement("div");
-    newLapNum.textContent = lapNum;
-    let minutesText = minutes.textContent;
-    let hoursText = hours.textContent;
-    let lapHrString;
-    let lapMinString;
-    let lapSecString;
-    let lapMsString;
-    if(minutesText === "00"){
-        minutesText = "";
-    }
-
-    else {
-        minutesText += ":";
-    }
-
-    if(hoursText === "00"){
-        hoursText = "";
-    }
-
-    currentOverallTime = totalTimeCalculator();
-    newOverallTime.textContent = hoursText + minutesText + seconds.textContent + "." + milliseconds.textContent;
-    hrCalculator(Math.abs(currentOverallTime - previousOverallTime)); //how is this possible (neg values)
-
-    if (lapHr === 0){
-        lapHrString = "";
-    }
-
-    else if(lapHr < 10){
-        lapHrString = "0" + lapHr + ":";
-    }
-
-    else {
-        lapHrString = lapHr + ":";
-    }
-
-    if (lapMin === 0 && lapHr === 0){
-        lapMinString = "";
-    }
-
-    else if(lapMin < 10){
-        lapMinString = "0" + lapMin + ":";
-    }
-
-    else {
-        lapMinString = lapMin + ":";
-    }
-
-    
-    if(lapSec < 10){
-        lapSecString = "0" + lapSec + ".";
-    }
-
-    else {
-        lapSecString = lapSec + ".";
-    }
-
-    
-    if(lapMs < 10){
-        lapMsString = "0" + lapMs;
-    }
-
-    else {
-        lapMsString = lapMs;
-    }
-
-    newLapTime.textContent = lapHrString + lapMinString + lapSecString + lapMsString;
-    newLap.classList.add("lap-styles");
-    newLapNum.classList.add("lap-num");
-    newLap.classList.add("animation");
-    // lapContainer.classList.add("animation");
-    lapContainer.prepend(newLap);
-
-    newLapTime.classList.add("time-flex");
-
-    newLapTime.appendChild(newLapOtherTime);
-    newLapTime.appendChild(newLapMs);
-    newLap.appendChild(newLapNum);
-    newLap.appendChild(newLapTime);
-    newLap.appendChild(newOverallTime);
-    previousOverallTime = currentOverallTime;
-    latestLapFunc();
-    lapNum++;
-}
-
-const play = () => {
-    clearIntervals();
-    start.textContent = "Resume";
-    setIntervalMs = 10 - timeRemainder;
-    setIntervalSec = 1000 - timeRemainder;
-    setIntervalMin = 60000 - timeRemainder;
-    // start.removeEventListener("click", clickStart);
-    start.addEventListener("click", clickStart);
-}
-
-const clearIntervals = () => {
-    storedMs = ms;
-    clearInterval(id1);
-    clearInterval(id2);
-    clearInterval(id3);
-}
-
-const clickStart = () => {
-    // for (let i = 1; i <= 9; i++){
-    ms = storedMs;
-        id1 = setInterval(() => {
             if (ms < 10){
                 zero = "0";
             }
@@ -339,13 +139,13 @@ const clickStart = () => {
                 zero = "";
             }
 
-            milliseconds.textContent = zero + ms;
+            microseconds.textContent = zero + ms;
 
             if (ms===99){
                 ms = -1;
             }
             ms++;
-        setIntervalMs = 10;
+        // setIntervalMs = 10;
             if (ms === 1){
         zero = "";
             if (sec < 10){
@@ -408,21 +208,306 @@ const clickStart = () => {
                 hours.classList.remove("display-none");
             }
         }
-        }, setIntervalMs);
+        // }
+        // }
+}
+
+/* I wanted to do this to handle time error 
+after pause you might not understand what I
+mean but this error is so small that the 
+time will be off by 1 second after about 
+3000 pause and resume without resetting.
+
+Pretty dumb huh?
+
+but you never know 
+
+the error would be caused by the fact that if you 
+pause when the setInterval is at 9ms waiting for
+10ms to execute its function, instead of waiting 
+for 1ms when you resume it will wait for 10ms again.
+
+
+
+update:
+i think i did it
+
+
+
+update:
+no i didn't
+*/
+
+// const timeLagFix = () => {
+//         ms = storedMs;
+//     setTimeout(timeDisplay, setIntervalMs);
+//     clickStartContinuation();
+//     clickStart();
+// }
+
+
+
+
+// const enableInfinteLap = () => {
+//     if (start.textContent === "Pause"){
+//         lap.classList.remove("display-none");
+//     } //you can remove the if statement
+// }
+
+const hrCalculator = (time) => {
+    let flooredTime = Math.floor(time / 360000);
+    lapHr = flooredTime;
+    minCalculator(time - lapHr * 360000);
+}
+
+const minCalculator = (time) => {
+    let flooredTime = Math.floor(time / 6000);
+    lapMin = flooredTime;
+    secCalculator(time - lapMin * 6000);
+}
+
+const secCalculator = (time) => {
+    let flooredTime = Math.floor(time / 100);
+    lapSec = flooredTime;
+    msCalculator(time - lapSec * 100);
+}
+
+const msCalculator = (time) => {
+    lapMs = time;
+}
+
+const totalTimeCalculator = () => {  // time is calculated in microseconds not milliseconds
+    let msNum = +microseconds.textContent;
+    let secNum = +seconds.textContent;
+    let minNum = +minutes.textContent;
+    let hrNum = +hours.textContent;
+
+    let totalTime = msNum + (secNum * 100) + (minNum * 6000) + (hrNum * 360000);
+    return totalTime;
+}
+
+const latestLapFunc = () => {
+
+    latestLap.classList.add("animation");
+    latestLap.classList.remove("display-none");
+    
+    let lapHrS;
+    let lapMinS;
+    let lapSecS;
+    let lapMsS;
+
+    setInterval(() => {
+        // mSec2 = (mSec2 + 1) % 10;
+        // if (mSec2 === 0) {
+        hrCalculator(Math.abs(totalTimeCalculator() - currentOverallTime));
+
+        if (lapHr === 0){
+            lapHrS = "";
+        }
+
+        else if (lapHr < 10) {
+            lapHrS = "0" + lapHr + ":";
+        }
+
+        else {
+            lapHrS = lapHr + ":";
+        }
+
+        if (lapMin === 59 && lapSec === 59){
+            latestLapHr.textContent = "00:";
+            latestLapHr.classList.add("animation");
+            latestLapHr.classList.remove("display-none");
+        }
+
         
-        start.textContent = "Pause";
+        if (lapMin < 10) {
+            lapMinS = "0" + lapMin;
+        }
+
+        else {
+            lapMinS = lapMin;
+        }
+
+
+
+        if (lapSec < 10) {
+            lapSecS = "0" + lapSec;
+        }
+
+        else {
+            lapSecS = lapSec;
+        }
+
+
+
+        if (lapMs < 10) {
+            lapMsS = "0" + lapMs;
+        }
+
+        else {
+            lapMsS = lapMs;
+        }
+
+
+
+        latestLapHr.textContent = lapHrS;
+        latestLapMin.textContent = lapMinS;
+        latestLapSec.textContent = lapSecS;
+        latestLapMs.textContent = lapMsS;
+    // }
+    }, 10)
+}
+
+const isLapClickedWhenPaused = () => {
+    if (pausedLap === 1 && start.textContent === "Resume"){
+        // lap.removeEventListener("click", createLap);
+        lap.classList.add("display-none");
+    }
+}
+
+const createLap = () => {
+    let newLap = document.createElement("div");
+    let newLapNum = document.createElement("div");
+    let newLapTime = document.createElement("div");
+    let newLapOtherTime = document.createElement("div");
+    let newLapMs = document.createElement("div");
+    let newOverallTime = document.createElement("div");
+    newLapNum.textContent = lapNum;
+    let minutesText = minutes.textContent;
+    let hoursText = hours.textContent;
+    let lapHrString;
+    let lapMinString;
+    let lapSecString;
+    let lapMsString;
+    if(minutesText === "00"){
+        minutesText = "";
+    }
+
+    else {
+        minutesText += ":";
+    }
+
+    if(hoursText === "00"){
+        hoursText = "";
+    }
+
+    currentOverallTime = totalTimeCalculator();
+    newOverallTime.textContent = hoursText + minutesText + seconds.textContent + "." + microseconds.textContent;
+    hrCalculator(Math.abs(currentOverallTime - previousOverallTime)); //how is this possible (neg values)
+
+    if (lapHr === 0){
+        lapHrString = "";
+    }
+
+    else if(lapHr < 10){
+        lapHrString = "0" + lapHr + ":";
+    }
+
+    else {
+        lapHrString = lapHr + ":";
+    }
+
+    if (lapMin === 0 && lapHr === 0){
+        lapMinString = "";
+    }
+
+    else if(lapMin < 10){
+        lapMinString = "0" + lapMin + ":";
+    }
+
+    else {
+        lapMinString = lapMin + ":";
+    }
+
+    
+    if(lapSec < 10){
+        lapSecString = "0" + lapSec + ".";
+    }
+
+    else {
+        lapSecString = lapSec + ".";
+    }
+
+    
+    if(lapMs < 10){
+        lapMsString = "0" + lapMs;
+    }
+
+    else {
+        lapMsString = lapMs;
+    }
+
+    newLapTime.textContent = lapHrString + lapMinString + lapSecString + lapMsString;
+    newLap.classList.add("lap-styles");
+    newLapNum.classList.add("lap-num");
+    newLap.classList.add("animation");
+    // lapContainer.classList.add("animation");
+    lapContainer.prepend(newLap);
+
+    newLapTime.classList.add("time-flex");
+
+    newLapTime.appendChild(newLapOtherTime);
+    newLapTime.appendChild(newLapMs);
+    newLap.appendChild(newLapNum);
+    newLap.appendChild(newLapTime);
+    newLap.appendChild(newOverallTime);
+    previousOverallTime = currentOverallTime;
+    latestLapFunc();
+    pausedLap = 1;
+    isLapClickedWhenPaused();
+    lapNum++;
+}
+
+const play = () => {
+    clearIntervals();
+    start.textContent = "Resume";
+    start.classList.remove("pause");
+    // setIntervalMs = 10 - timeRemainder;
+    // setIntervalSec = 1000 - timeRemainder;
+    // setIntervalMin = 60000 - timeRemainder;
+    // start.removeEventListener("click", clickStart);
+    start.addEventListener("click", clickStart);
+    pausedLap = 0;
+}
+
+const clearIntervals = () => {
+    storedMs = ms;
+    clearInterval(id1);
+    // clearInterval(id2);
+    // clearInterval(id3);
+}
+
+const clickStart = () => {
+    // for (let i = 1; i <= 9; i++){
+        // if (!alreadyRan){
+                ms = storedMs;   //is it useful?
+        // }
+        id1 = setInterval(timeDisplay, 10);
+        // if (!alreadyRan){
+            clickStartContinuation();
+        // }
+        // alreadyRan = true;
+}
+
+const clickStartContinuation = () => {
+            start.textContent = "Pause";
+        start.classList.add("pause");
         start.removeEventListener("click", clickStart);
         // start.addEventListener("click", clearIntervals);
         start.addEventListener("click", play);
         if(!lapDisabled){
+            lap.classList.add("lap-animation");
             lap.classList.remove("display-none");
         }
         circle.classList.add("circle-start");
+
+
+               // enableInfinteLap();
         // lapContainer.classList.remove("display-none");
 
         // setTimeout(() => {
         //     id2 = setInterval(() => {
-        //         milliseconds.textContent = ms;
+        //         microseconds.textContent = ms;
         //         if (ms===99){
         //             clearInterval(id2);
         //         }
@@ -458,7 +543,7 @@ const clickStart = () => {
 
     // for (let i = 10; i <= 99; i++){
     //     setInterval(() => {
-    //         milliseconds.textContent = i;
+    //         microseconds.textContent = i;
     //     }, 1);
     //     // (i !== 99) ? clearTimeout(id) : {};
     // }
@@ -476,11 +561,9 @@ const clickStart = () => {
     //         seconds.textContent = i;
     //     }, 1000);
     // }
-
-
 }
 
-start.addEventListener("click", clickStart); // so you must declare the clickStart function first if it's an arrow function?
+start.addEventListener("click", clickStart); // so you must declare the clickStart function first if it's a "let" or "const" arrow function?
 
 reset.addEventListener("click", function (){
     latestLap.classList.remove("animation");
@@ -491,13 +574,15 @@ reset.addEventListener("click", function (){
     timeRemainder = 0;
     play();
     lap.classList.add("display-none");
+    lapNum = 1;
+    previousOverallTime = 0;
     while (lapContainer.firstChild){
         lapContainer.removeChild(lapContainer.firstChild);
     }
     // lapContainer.classList.add("display-none");
     minutes.textContent = "00";
     seconds.textContent = "00";
-    milliseconds.textContent = "00";
+    microseconds.textContent = "00";
     ms = 1;
     sec = 1;
     min = 1;
@@ -519,7 +604,9 @@ enableButton.addEventListener("click", () => {
             lapContainer.removeChild(lapContainer.firstChild);
         }
 
-        lap.classList.add("display-none");
+        lap.classList.add("display-none");//hmm
+        lapNum = 1;
+        previousOverallTime = 0;
         latestLap.classList.add("display-none");
         latestLap.classList.remove("animation");
     }
@@ -527,8 +614,8 @@ enableButton.addEventListener("click", () => {
         enableButton.classList.remove("blue");
         lapDisabled = false;
         lap.classList.remove("display-none");
-        if (( (hours.textContent === "00") || (hours.textContent === "") ) && ( (minutes.textContent === "00") || (minutes.textContent === "00"))){
-            if (( (seconds.textContent === "00") || (seconds.textContent === "") ) && ( (milliseconds.textContent === "00") || (milliseconds.textContent === "00"))){
+        if (( (hours.textContent === "00") || (hours.textContent === "") ) && ( (minutes.textContent === "00") || (minutes.textContent === ""))){
+            if (( (seconds.textContent === "00") || (seconds.textContent === "") ) && ( (microseconds.textContent === "00") || (microseconds.textContent === ""))){
                 lap.classList.add("display-none");
             }
         }

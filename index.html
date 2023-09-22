@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stopwatch</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- <h1>Stopwatch</h1> -->
     <section>
       <div class="clock-div">
         <p></p>
@@ -25,7 +29,7 @@
         <p class="main-time">
           <span class="hours display-none">00</span
           ><span class="minutes">00</span>:<span class="seconds">00</span>.<span
-            class="milliseconds"
+            class="microseconds"
             >00</span
           >
         </p>
@@ -39,16 +43,17 @@
       </div>
 
       <div class="start-reset-container">
-        <button class="start">Start</button>
-        <button class="reset">Reset</button>
+        <a class="start">Start</a>
+        <a class="reset">Reset</a>
       </div>
 
       <div class="lap-plus-container">
-        <button class="lap lap-plus display-none">Lap +</button>
+        <a class="lap lap-plus display-none">Lap +</a>
       </div>
 
       <div class="lap-container"></div>
-    <div class="settings display-none">
+
+    <div class="settings settings-animation display-none">
       <div class="popup">Lap</div>
       <div class="enable-back display-none">
         <div class="able enable-button display-none">Disable</div>

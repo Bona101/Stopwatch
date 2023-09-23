@@ -421,8 +421,8 @@ const createLap = () => {
     let newLapNum = document.createElement("div");
     let newLapTime = document.createElement("div");
     let newLapOtherTime = document.createElement("div");
-    // let newLapInner = document.createElement("div");
-    let newLapMs = document.createElement("div");
+    let newLapInner = document.createElement("span");
+    let newLapMs = document.createElement("span");
     let newOverallTime = document.createElement("div");
     let newOverallMs = document.createElement("div");
     newLapNum.textContent = lapNum;
@@ -491,7 +491,7 @@ const createLap = () => {
         lapMsString = lapMs;
     }
 
-    newLapTime.textContent = lapHrString + lapMinString + lapSecString/* + lapMsString*/;
+    newLapInner.textContent = lapHrString + lapMinString + lapSecString/* + lapMsString*/;
     newLapMs.textContent = lapMsString;
     newLapMs.classList.add("lap-ms-style");
     newOverallMs.classList.add("lap-ms-style");
@@ -504,9 +504,10 @@ const createLap = () => {
     // lapContainer.classList.add("animation");
     lapContainer.prepend(newLap);
 
-    newLapTime.classList.add("time-flex");//why?
+    // newLapTime.classList.add("time-flex"); why?
 
     newLapTime.appendChild(newLapOtherTime);
+    newLapTime.appendChild(newLapInner);
     newLapTime.appendChild(newLapMs);
     newOverallTime.appendChild(newOverallMs);
     // newLapInner.appendChild(newLapMs);

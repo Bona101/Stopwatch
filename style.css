@@ -4,7 +4,7 @@
 }
 
 body {
-    font-family: "Poppins", sans-serif;
+    font-family:serif;
     font-size: 1.3rem;
     /* background: linear-gradient(135deg, rgb(222, 209, 209) 0%, rgb(18, 11, 11) 1400px); */
     /* background: linear-gradient(rgb(0, 64, 128) 0%, rgb(0, 25, 51) 100%); */
@@ -334,7 +334,7 @@ section {
 .lap-header-animation-1 {
     animation-name: left-in;
     animation-duration: 1s;
-    width: 99.41px;
+    width: 56.14px;
     /* margin-left: 10px; */
 }
 
@@ -366,7 +366,7 @@ section {
     background: linear-gradient(295deg, rgb(200, 0, 200) 0%, rgb(100, 0, 100) 100%);
     color: white;
     border-radius: 1rem;
-    font-size: 18px;
+    font-size: 1rem;
     /* line-height: 2rem; */
     padding: 20px 10px;
     margin-bottom: 20px;
@@ -376,19 +376,22 @@ section {
 .lap-styles-element-1 {
     width: 30%;
     text-align: left;
+    align-items: end;
 }
 
 .lap-styles-element-2 {
     display: flex;
     justify-content: center;
+    align-items: end;
     width: 30%;
     text-align: center;
+    height: fit-content;
     /* margin-left: 22.5px; */
 }
 
 .lap-ms-style {
-    font-size: 14px;
-    line-height: 22px;
+    /* font-size: 0.8rem;
+    line-height: 28px; */
     /* text-justify: end; */
 }
 
@@ -397,6 +400,7 @@ section {
     text-align: right;
     display: flex;
     justify-content: end;
+    align-items: end;
 }
 
 .lap-num {

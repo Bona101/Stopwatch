@@ -4,7 +4,7 @@
 }
 
 body {
-    font-family:serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 1.3rem;
     /* background: linear-gradient(135deg, rgb(222, 209, 209) 0%, rgb(18, 11, 11) 1400px); */
     /* background: linear-gradient(rgb(0, 64, 128) 0%, rgb(0, 25, 51) 100%); */
@@ -150,7 +150,7 @@ section {
     align-items: center;
     margin: 0 auto;
     position: relative;
-    font-family: Digital;
+    font-family: Digital, sans-serif;
     font-size: 2rem;
 }
 

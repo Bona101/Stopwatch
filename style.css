@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Digital;
+    src: url(./fonts/DS-DIGIB.TTF);
+}
+
 body {
     font-family: "Poppins", sans-serif;
     font-size: 1.3rem;
@@ -5,6 +10,7 @@ body {
     /* background: linear-gradient(rgb(0, 64, 128) 0%, rgb(0, 25, 51) 100%); */
     background: #d8cbc4;
     /* background: #bca89f; */
+    padding: 100px 0;
 }
 
 html {
@@ -68,7 +74,7 @@ section {
     padding: 20px;
     border-radius: 2rem;
     width: 430px;
-    margin: 100px auto;
+    margin: 0 auto;
 }
 
 .clock-div {
@@ -80,12 +86,42 @@ section {
     /* padding: 0px; */
 }
 
+.settings-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    /* background-color: black; */
+}
+
+.settings-icon-popup {
+    position: absolute;
+    width: auto;
+    height: auto;
+    inset: 0;
+    opacity: 0;
+    border-radius: 0;
+    /* background-color: black; */
+}
+
+.settings-img-popup {
+    display: none;
+}
+
 .settings-img {
     padding: 7.5px;
     overflow: visible;
     box-shadow: 5px 5px 15px -7.5px black;
     border-radius: 50%;
+    user-select: none;
+    /* margin: 0; */
     /* background-color: #fcfcff; */
+}
+
+.settings-img:hover {
+    cursor: pointer;
+    /* opacity: 0.3; */
+    background-color: rgb(88, 66, 66);
+    /* background: linear-gradient(135deg, rgb(204, 82, 82) 0%, rgb(4, 20, 93) 100%); */
 }
 
 .cancel-height {
@@ -114,6 +150,8 @@ section {
     align-items: center;
     margin: 0 auto;
     position: relative;
+    font-family: Digital;
+    font-size: 2rem;
 }
 
 .main-time {
@@ -125,13 +163,13 @@ section {
 
 .latest-lap {
     /* position: absolute; */
-    margin-top: 75px;
+    margin-top: 100px;
     color: purple;
-    font-size: 0.9rem;
+    font-size: 1.3rem;
 }
 
 .latest-lap-ms {
-    font-size: 0.6rem;
+    font-size: 1rem;
 }
 
 .circle-start {
@@ -143,12 +181,12 @@ section {
 }
 
 .display-none {
-    display: none;
+    display: none!important;
 }
 
 .microseconds {
     /* opacity: 1; */
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 .start-reset-container {
@@ -208,7 +246,9 @@ section {
 }
 
 .pause-num {
-    color: white;
+    background: linear-gradient(180deg, rgb(255, 0, 0) 0%, rgb(0, 0, 255) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .start:hover,
@@ -274,15 +314,89 @@ section {
     margin-bottom: 25px;
 }
 
+.lap-header-container {
+    padding: 0 10px;
+}
+
+.lap-header-container-animation {
+    animation-name: header-slide-up;
+    animation-duration: 0.5s;
+}
+
+.lap-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    /* position: relative; */
+    /* text-align: center; */
+} 
+
+.lap-header-animation-1 {
+    animation-name: left-in;
+    animation-duration: 1s;
+    width: 99.41px;
+    /* margin-left: 10px; */
+}
+
+.lap-header-animation-2 {
+    animation-name: center-in;
+    animation-duration: 1s;
+}
+
+.lap-header-animation-3 {
+    animation-name: right-in;
+    animation-duration: 1s;
+    /* margin-right: 10px; */
+}
+/* 
+.lap-header-line {
+    background-color: black;
+    border: none;
+    height: 1px;
+    margin-top: -9px;
+} */
+/* 
+.nono {
+    display: none;
+} */
+
 .lap-styles {
     display: flex;
     justify-content: space-between;
     background: linear-gradient(295deg, rgb(200, 0, 200) 0%, rgb(100, 0, 100) 100%);
     color: white;
     border-radius: 1rem;
+    font-size: 18px;
+    /* line-height: 2rem; */
     padding: 20px 10px;
     margin-bottom: 20px;
     box-shadow: 10px 10px 10px -10px black;
+}
+
+.lap-styles-element-1 {
+    width: 30%;
+    text-align: left;
+}
+
+.lap-styles-element-2 {
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    text-align: center;
+    /* margin-left: 22.5px; */
+}
+
+.lap-ms-style {
+    font-size: 14px;
+    line-height: 22px;
+    /* text-justify: end; */
+}
+
+.lap-styles-element-3 {
+    width: 30%;
+    text-align: right;
+    display: flex;
+    justify-content: end;
 }
 
 .lap-num {
@@ -303,8 +417,8 @@ section {
 }
 
 .time-flex {
-    display: flex;
-    gap: 10px;
+    /* display: flex;
+    gap: 10px; */
 }
 
 .animation {
@@ -329,12 +443,12 @@ section {
 
 @keyframes slide-in {
     from {
-        transform: translateX(-50px);
+        transform: translateY(-30px);
         opacity: 0;
     }
     
     to {
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
     }
 }
@@ -426,6 +540,42 @@ section {
     }
 }
 
+@keyframes left-in {
+    from {
+        transform: translateX(-25px);
+        opacity: 0.5;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes center-in {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes right-in {
+    from {
+        transform: translateX(25px);
+        opacity: 0.5;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 .settings-popup {
     position: absolute;
     z-index: 5;
@@ -499,6 +649,7 @@ section {
 .section-popup {
     /* opacity: 0.1; */
     background-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgb(196, 93, 93) 0%, rgb(36, 46, 94) 100%);
 }
 
 .body-popup {
@@ -513,6 +664,16 @@ section {
     pointer-events: none;
 }
 
+@keyframes header-slide-up {
+    0% {
+        transform: translateY(20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
 @keyframes slide-up {
     0% {
         transform: translateY(500px);
@@ -522,6 +683,19 @@ section {
     100% {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+@keyframes slide-down {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(500px);
+        opacity: 0;
+        /* display: none; */
     }
 }
 
@@ -561,5 +735,11 @@ section {
 
 .settings-animation {
     animation-name: slide-up;
-    animation-duration: 0.4s;
+    animation-duration: 0.3s;
 }
+
+.disappear {
+    /* display: block; */
+    animation-name: slide-down;
+    animation-duration: 0.4s;
+} 

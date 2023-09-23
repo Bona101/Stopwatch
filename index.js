@@ -5,6 +5,9 @@ const reset = document.querySelector(".reset");
 
 const lap = document.querySelector(".lap-plus");
 const lapPlusContainer = document.querySelector(".lap-plus-container");
+const lapHeader = document.querySelector(".lap-header");
+const lapHeaderContainer = document.querySelector(".lap-header");
+// const lapHeaderLine = document.querySelector(".lap-header-line");
 const lapContainer = document.querySelector(".lap-container");
 
 const latestLap = document.querySelector(".latest-lap");
@@ -13,6 +16,8 @@ const latestLapMin = document.querySelector(".latest-lap-min");
 const latestLapSec = document.querySelector(".latest-lap-sec");
 const latestLapMs = document.querySelector(".latest-lap-ms");
 
+
+const mainTime = document.querySelector(".main-time");
 const hours = document.querySelector(".hours");
 const minutes = document.querySelector(".minutes");
 const seconds = document.querySelector(".seconds");
@@ -73,7 +78,9 @@ let slideIndex = 0;
 let ableIndex = 0;
 
 // let alreadyRan = false;
+let closingPopup = false;
 let lapDisabled = false;
+let lapBeforeFirstPause = false;
 
 let ableArray = ["Enable", "Disable"];
 
@@ -90,38 +97,77 @@ let SettingImages = ["./images/cancel.png","./images/settings.webp"];
 // }
 
 const popupFunc = () => {
-    section.classList.toggle("section-popup");
+    settings.classList.toggle("disappear");
     body.classList.toggle("body-popup");
-    // settings.classList.add("settings-animation");
-    settings.classList.toggle("settings-popup");
-    settings.classList.toggle("display-none");
-    popup.classList.toggle("popup-popup");
-    settingsImg.setAttribute("src", SettingImages[index]);
-    settingsImg.classList.toggle("cancel-height");
-    enableBack.classList.toggle("display-none");
-    enableButton.classList.toggle("display-none");
     circle.classList.toggle("opacity-popup");
     start.classList.toggle("opacity-popup");
     reset.classList.toggle("opacity-popup");
     lap.classList.toggle("opacity-popup");
+    lapHeader.classList.toggle("opacity-popup");
+    lapPlusContainer.classList.toggle("opacity-popup");
+    lapContainer.classList.toggle("opacity-popup");
     start.classList.toggle("start-reset-lap-popup");
     reset.classList.toggle("start-reset-lap-popup");
     lap.classList.toggle("start-reset-lap-popup");
-    lapPlusContainer.classList.toggle("opacity-popup");
-    lapContainer.classList.toggle("opacity-popup");
-    
-    // body.addEventListener("click", () => {
-    //     section.classList.toggle("section-popup");
-    //     body.classList.toggle("body-popup");
-    //     settings.classList.remove("settings-popup");
-    //     settings.classList.add("display-none");
-    //     popup.classList.remove("popup-popup");
-    //     // body.removeEventListener("click", popupFunc)
-    // })
-    // settingsIcon.removeEventListener("click", popupFunc)
+    section.classList.toggle("section-popup");
+    settingsIcon.classList.toggle("settings-icon-popup");
+    settingsImg.classList.toggle("cancel-height");
 
-    // remm();
-    index = (index + 1) % 2;
+    // settingsImg.setAttribute("src", SettingImages[index]);
+
+    // settings.classList.add("settings-animation");
+    if (closingPopup){
+        setTimeout(() => {
+            settingsImg.classList.toggle("settings-img-popup");
+            settings.classList.toggle("settings-popup");
+            settings.classList.toggle("display-none");
+            popup.classList.toggle("popup-popup");
+            // enableBack.classList.toggle("display-none");
+            // enableButton.classList.toggle("display-none");
+
+            // lapHeaderLine.classList.toggle("opacity-popup");
+
+
+            
+            // body.addEventListener("click", () => {
+            //     section.classList.toggle("section-popup");
+            //     body.classList.toggle("body-popup");
+            //     settings.classList.remove("settings-popup");
+            //     settings.classList.add("display-none");
+            //     popup.classList.remove("popup-popup");
+            //     // body.removeEventListener("click", popupFunc)
+            // })
+            // settingsIcon.removeEventListener("click", popupFunc)
+
+            // remm();
+        }, 300)
+
+    }
+
+    else {
+        settingsImg.classList.toggle("settings-img-popup");
+        settings.classList.toggle("settings-popup");
+        settings.classList.toggle("display-none");
+        popup.classList.toggle("popup-popup");
+        // enableBack.classList.toggle("display-none");
+        // enableButton.classList.toggle("display-none");
+        // lapHeaderLine.classList.toggle("opacity-popup");
+        
+        
+        // body.addEventListener("click", () => {
+        //     section.classList.toggle("section-popup");
+        //     body.classList.toggle("body-popup");
+        //     settings.classList.remove("settings-popup");
+        //     settings.classList.add("display-none");
+        //     popup.classList.remove("popup-popup");
+        //     // body.removeEventListener("click", popupFunc)
+        // })
+        // settingsIcon.removeEventListener("click", popupFunc)
+
+        // remm();
+    }
+    // index = (index + 1) % 2;
+    closingPopup = !closingPopup;
 }
 
 const timeDisplay = () => {
@@ -362,16 +408,23 @@ const isLapClickedWhenPaused = () => {
     if (pausedLap === 1 && start.textContent === "Resume"){
         // lap.removeEventListener("click", createLap);
         lap.classList.add("display-none");
+        if (lapBeforeFirstPause){   
+            lapHeaderContainer.classList.add("lap-header-container-animation");
+        }
     }
 }
 
 const createLap = () => {
+    lapHeader.classList.remove("display-none");
+    // lapHeaderLine.classList.remove("display-none");
     let newLap = document.createElement("div");
     let newLapNum = document.createElement("div");
     let newLapTime = document.createElement("div");
     let newLapOtherTime = document.createElement("div");
+    // let newLapInner = document.createElement("div");
     let newLapMs = document.createElement("div");
     let newOverallTime = document.createElement("div");
+    let newOverallMs = document.createElement("div");
     newLapNum.textContent = lapNum;
     let minutesText = minutes.textContent;
     let hoursText = hours.textContent;
@@ -392,7 +445,8 @@ const createLap = () => {
     }
 
     currentOverallTime = totalTimeCalculator();
-    newOverallTime.textContent = hoursText + minutesText + seconds.textContent + "." + microseconds.textContent;
+    newOverallTime.textContent = hoursText + minutesText + seconds.textContent + ".";
+    newOverallMs.textContent = microseconds.textContent;
     hrCalculator(Math.abs(currentOverallTime - previousOverallTime)); //how is this possible (neg values)
 
     if (lapHr === 0){
@@ -437,17 +491,25 @@ const createLap = () => {
         lapMsString = lapMs;
     }
 
-    newLapTime.textContent = lapHrString + lapMinString + lapSecString + lapMsString;
+    newLapTime.textContent = lapHrString + lapMinString + lapSecString/* + lapMsString*/;
+    newLapMs.textContent = lapMsString;
+    newLapMs.classList.add("lap-ms-style");
+    newOverallMs.classList.add("lap-ms-style");
     newLap.classList.add("lap-styles");
+    newLapNum.classList.add("lap-styles-element-1");
+    newLapTime.classList.add("lap-styles-element-2");
+    newOverallTime.classList.add("lap-styles-element-3");
     newLapNum.classList.add("lap-num");
     newLap.classList.add("animation");
     // lapContainer.classList.add("animation");
     lapContainer.prepend(newLap);
 
-    newLapTime.classList.add("time-flex");
+    newLapTime.classList.add("time-flex");//why?
 
     newLapTime.appendChild(newLapOtherTime);
     newLapTime.appendChild(newLapMs);
+    newOverallTime.appendChild(newOverallMs);
+    // newLapInner.appendChild(newLapMs);
     newLap.appendChild(newLapNum);
     newLap.appendChild(newLapTime);
     newLap.appendChild(newOverallTime);
@@ -455,6 +517,7 @@ const createLap = () => {
     latestLapFunc();
     pausedLap = 1;
     isLapClickedWhenPaused();
+    lapBeforeFirstPause = true;
     lapNum++;
 }
 
@@ -462,6 +525,8 @@ const play = () => {
     clearIntervals();
     start.textContent = "Resume";
     start.classList.remove("pause");
+    mainTime.classList.add("pause-num");
+    lapHeaderContainer.classList.remove("lap-header-container-animation");
     // setIntervalMs = 10 - timeRemainder;
     // setIntervalSec = 1000 - timeRemainder;
     // setIntervalMin = 60000 - timeRemainder;
@@ -492,6 +557,7 @@ const clickStart = () => {
 const clickStartContinuation = () => {
             start.textContent = "Pause";
         start.classList.add("pause");
+        mainTime.classList.remove("pause-num");
         start.removeEventListener("click", clickStart);
         // start.addEventListener("click", clearIntervals);
         start.addEventListener("click", play);
@@ -566,6 +632,8 @@ const clickStartContinuation = () => {
 start.addEventListener("click", clickStart); // so you must declare the clickStart function first if it's a "let" or "const" arrow function?
 
 reset.addEventListener("click", function (){
+    lapHeader.classList.add("display-none");
+    // lapHeaderLine.classList.add("display-none");
     latestLap.classList.remove("animation");
     latestLap.classList.add("display-none");
     circle.classList.remove("circle-start");
@@ -587,6 +655,8 @@ reset.addEventListener("click", function (){
     sec = 1;
     min = 1;
     hr = 1;
+    lapBeforeFirstPause = false;
+    mainTime.classList.remove("pause-num");
     start.textContent = "Start";
 });
 
@@ -609,6 +679,9 @@ enableButton.addEventListener("click", () => {
         previousOverallTime = 0;
         latestLap.classList.add("display-none");
         latestLap.classList.remove("animation");
+        lapHeader.classList.add("display-none");
+        // lapHeaderLine.classList.add("display-none");
+
     }
     else {
         enableButton.classList.remove("blue");

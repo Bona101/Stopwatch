@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stopwatch</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- <h1>Stopwatch</h1> -->
@@ -35,31 +38,41 @@
         </p>
         <p class="latest-lap display-none">
           <span class="latest-lap-hr hours display-none">00</span
-          ><span class="latest-lap-min minutes">00</span>:<span class="latest-lap-sec seconds">00</span>.<span
-            class="latest-lap-ms"
+          ><span class="latest-lap-min minutes">00</span>:<span
+            class="latest-lap-sec seconds"
             >00</span
-          >
+          >.<span class="latest-lap-ms">00</span>
         </p>
       </div>
 
       <div class="start-reset-container">
-        <a class="start">Start</a>
-        <a class="reset">Reset</a>
+        <div class="start">Start</div>
+        <div class="reset">Reset</div>
       </div>
 
       <div class="lap-plus-container">
-        <a class="lap lap-plus display-none">Lap +</a>
+        <div class="lap lap-plus display-none">Lap</div>
+      </div>
+      <div class="lap-header-container">
+        <div class="lap-header display-none">
+          <p class="lap-header-animation-1">Lap</p>
+          <p class="lap-header-animation-2">Lap Time</p>
+          <p class="lap-header-animation-3">Overall Time</p>
+        </div>
+        <!-- <hr class="lap-header-line display-none nono" /> -->
       </div>
 
       <div class="lap-container"></div>
 
-    <div class="settings settings-animation display-none">
-      <div class="popup">Lap</div>
-      <div class="enable-back display-none">
-        <div class="able enable-button display-none">Disable</div>
+      <div class="settings disappear settings-animation display-none">
+        <div class="popup">Lap</div>
+        <div class="enable-back">   <!--display-none-->
+          <div class="able enable-button">Disable</div> <!--display-none-->
+        </div>
       </div>
-    </div>
     </section>
+
+<!-- <div style="font-size: 24px; display: flex;">sd <div style="font-size: 0.8rem;">ds</div></div> -->
 
     <script src="index.js" charset="utf-8"></script>
   </body>

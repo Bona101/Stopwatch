@@ -320,7 +320,7 @@ section {
 
 .lap-header-container-animation {
     animation-name: header-slide-up;
-    animation-duration: 0.5s;
+    animation-duration: 0.3s;
 }
 
 .lap-header {
@@ -670,7 +670,7 @@ section {
 
 @keyframes header-slide-up {
     0% {
-        transform: translateY(20px);
+        transform: translateY(10px);
     }
 
     100% {

@@ -493,8 +493,8 @@ const createLap = () => {
 
     newLapInner.textContent = lapHrString + lapMinString + lapSecString/* + lapMsString*/;
     newLapMs.textContent = lapMsString;
-    newLapMs.classList.add("lap-ms-style");
-    newOverallMs.classList.add("lap-ms-style");
+    // newLapMs.classList.add("lap-ms-style");
+    // newOverallMs.classList.add("lap-ms-style");
     newLap.classList.add("lap-styles");
     newLapNum.classList.add("lap-styles-element-1");
     newLapTime.classList.add("lap-styles-element-2");

@@ -584,14 +584,14 @@ section {
 .settings-popup {
     position: absolute;
     z-index: 5;
-    top: 25%;
+    top: 270px;
     left: 50%;
     /* inset: 200px;
     top: 200px; */
 
     /* margin: 0 auto; */
-    width: 300px;
-    margin-left: -170px;
+    width: 400px;
+    margin-left: -220px;
     /* margin-top: -30px; */
     /* height: 20px; */
     background-color: #FFFFFF;
@@ -600,6 +600,43 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+}
+
+
+@media (max-width: 991px){
+    .settings-popup {
+        width: 300px;
+        margin-left: -170px;
+    }
+}
+
+@media (max-width: 424px){
+    .settings-popup {
+        width: 250px;
+        margin-left: -145px;
+    }
+}
+
+@media (max-width: 350px){
+    .settings-popup {
+        width: 200px;
+        margin-left: -120px;
+        top: 245px;
+    }
+}
+
+@media (max-width: 280px){
+    .settings-popup {
+        width: 150px;
+        margin-left: -95px;
+    }
+}
+
+@media (max-width: 230px){
+    .settings-popup {
+        width: 135px;
+        margin-left: -87.5px;
+    }
 }
 
 /* .settings-after {
